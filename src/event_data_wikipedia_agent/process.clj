@@ -14,7 +14,7 @@
   (:require [robert.bruce :refer [try-try-again]]))
 
 (def source-token "36c35e23-8757-4a9d-aacf-345e9b7eb50d")
-(def version "0.1.1")
+(def version "0.1.4")
 
 ; Counters. 
 (def heartbeat-restbase (atom 0))
