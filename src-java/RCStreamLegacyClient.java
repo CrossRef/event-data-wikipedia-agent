@@ -10,14 +10,12 @@ import clojure.lang.IFn;
 
 /* RCStream client using legacy 0.9 websocket.io */
 public class RCStreamLegacyClient {
-  private Object context;
   private IFn callback;
   private IFn disconnectCallback;
   private String subscribe;
   private SocketIO socket;
 
-  public RCStreamLegacyClient(Object context, IFn callback, String subscribe, IFn disconnectCallback) {
-    this.context = context;
+  public RCStreamLegacyClient(IFn callback, String subscribe, IFn disconnectCallback) {
     this.callback = callback;
     this.subscribe = subscribe;
     this.disconnectCallback = disconnectCallback;
@@ -68,7 +66,7 @@ public class RCStreamLegacyClient {
 
         @Override
         public void on(String event, IOAcknowledge ack, Object... args) {
-            RCStreamLegacyClient.this.callback.invoke(RCStreamLegacyClient.this.context, event, args);
+            RCStreamLegacyClient.this.callback.invoke(event, args);
         }
     });
 
