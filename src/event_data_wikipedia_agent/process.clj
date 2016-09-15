@@ -14,7 +14,7 @@
   (:require [robert.bruce :refer [try-try-again]]))
 
 (def source-token "36c35e23-8757-4a9d-aacf-345e9b7eb50d")
-(def version "0.1.4")
+(def version "0.1.5")
 
 ; Counters. 
 (def heartbeat-restbase (atom 0))
@@ -94,13 +94,13 @@
                             :source_id "wikipedia"
                             :action (:action event)
                             :occurred_at (str timestamp)
-                            :subj (into {} (remove (comp nil? second) 
-                                                   {:title title
-                                                    :issued (str timestamp)
-                                                    :pid canonical-url
-                                                    :URL canonical-url
-                                                    :author {:literal author-url}
-                                                    :type "entry-encyclopedia"}))}) all-events)]
+                            :subj (merge
+                                     {:title title
+                                      :issued (str timestamp)
+                                      :pid canonical-url
+                                      :URL canonical-url
+                                      :type "entry-encyclopedia"}
+                                     (when author-url {:author {:literal author-url}}))}) all-events)]
     
         (swap! heartbeat-restbase-ok (partial + 2))
         

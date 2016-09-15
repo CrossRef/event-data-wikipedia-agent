@@ -1,4 +1,4 @@
-(defproject event-data-wikipedia-agent "0.1.4"
+(defproject event-data-wikipedia-agent "0.1.5"
   :description "Event Data Wikipedia Agent"
   :url "http://eventdata.crossref.org"
   :license {:name "The MIT License (MIT)"
@@ -11,6 +11,7 @@
   :main ^:skip-aot event-data-wikipedia-agent.core
   :java-source-paths ["src-java"]
   :target-path "target/%s"
- :profiles {:uberjar {:aot :all}
+  :jvm-opts ["-Duser.timezone=UTC"]
+  :profiles {:uberjar {:aot :all}
              :prod {:resource-paths ["config/prod" "lib/socketio.jar"]}
              :dev  {:resource-paths ["config/dev" "lib/socketio.jar"]}})
