@@ -63,8 +63,8 @@
         old-restbase-url (build-restbase-url server-name title old-revision)
         new-restbase-url (build-restbase-url server-name title new-revision)
         
-        {old-status :status old-body :body} (try-try-again {:tries 10 :delay 1000} (fn [] @(http/get old-restbase-url))) 
-        {new-status :status new-body :body} (try-try-again {:tries 10 :delay 1000} (fn [] @(http/get new-restbase-url)))
+        {old-status :status old-body :body} (try-try-again {:tries 10 :delay 1000 :return? #(= 200 (:status %))} (fn [] @(http/get old-restbase-url {:timeout 10000}))) 
+        {new-status :status new-body :body} (try-try-again {:tries 10 :delay 1000 :return? #(= 200 (:status %))} (fn [] @(http/get new-restbase-url {:timeout 10000})))
 
         timestamp (clj-time-coerce/from-long (* 1000 (get data "timestamp")))
 
@@ -94,13 +94,14 @@
                             :source_id "wikipedia"
                             :action (:action event)
                             :occurred_at (str timestamp)
-                            :subj {:title title
-                                   :issued (str timestamp)
-                                   :pid canonical-url
-                                   :URL canonical-url
-                                   :author {:literal author-url}
-                                   :type "entry-encyclopedia"}}) all-events)]
-
+                            :subj (into {} (remove (comp nil? second) 
+                                                   {:title title
+                                                    :issued (str timestamp)
+                                                    :pid canonical-url
+                                                    :URL canonical-url
+                                                    :author {:literal author-url}
+                                                    :type "entry-encyclopedia"}))}) all-events)]
+    
         (swap! heartbeat-restbase-ok (partial + 2))
         
         (if (= 200 old-status)
