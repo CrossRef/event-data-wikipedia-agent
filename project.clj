@@ -1,4 +1,4 @@
-(defproject event-data-wikipedia-agent "0.1.1"
+(defproject event-data-wikipedia-agent "0.1.2"
   :description "Event Data Wikipedia Agent"
   :url "http://eventdata.crossref.org"
   :license {:name "The MIT License (MIT)"

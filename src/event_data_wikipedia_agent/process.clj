@@ -98,7 +98,7 @@
                                    :issued (str timestamp)
                                    :pid canonical-url
                                    :URL canonical-url
-                                   :author author-url
+                                   :author {:literal author-url}
                                    :type "entry-encyclopedia"}}) all-events)]
 
         (swap! heartbeat-restbase-ok (partial + 2))
