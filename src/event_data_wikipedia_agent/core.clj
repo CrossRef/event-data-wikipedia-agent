@@ -80,7 +80,7 @@
   (run-client))
 
 (defn report-queue-sizes
-  ""
+  "Periodically report size of queues."
   [artifacts callback]
   (c/send-heartbeat "wikipedia-agent/input/recent-changes-input" @heartbeat-recent-changes-stream)
   (reset! heartbeat-recent-changes-stream 0)
@@ -102,7 +102,7 @@
 (def agent-definition
   {:agent-name "wikipedia-agent"
    :version process/version
-   :schedule [{:name "queue-sizes"
+   :schedule [{:name "report-queue-sizes"
               :fun report-queue-sizes
               :seconds 10
               :required-artifacts []}]

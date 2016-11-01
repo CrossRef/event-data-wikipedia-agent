@@ -14,7 +14,7 @@
   (:require [robert.bruce :refer [try-try-again]]))
 
 (def source-token "36c35e23-8757-4a9d-aacf-345e9b7eb50d")
-(def version "0.1.5")
+(def version "0.1.6")
 
 ; Counters. 
 (def heartbeat-restbase (atom 0))
@@ -78,7 +78,7 @@
         canonical-url (framework-web/fetch-canonical-url (build-wikipedia-url server-name title))
 
         added-events (map (fn [doi] {:action "add" :doi doi :event-id (str (UUID/randomUUID))}) added-dois)
-        removed-events (map (fn [doi] {:action "remove" :doi doi :event-id (str (UUID/randomUUID))}) removed-dois)
+        removed-events (map (fn [doi] {:action "delete" :doi doi :event-id (str (UUID/randomUUID))}) removed-dois)
         
         all-events (concat added-events removed-events)
         
