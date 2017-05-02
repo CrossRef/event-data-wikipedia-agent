@@ -1,36 +1,20 @@
-# event-data-wikipedia-agent
+# Event Data Wikipedia Agent
 
-FIXME: description
+Crossref Event Data Wikipedia Agent. Monitors the Event Stream on all available Wikimedia properties for edits. This Agent interfaces with the Percolator. It does not supply Action IDs because it is a very high-volume, relatively high noise agent and the trade-off for duplicates is in favour of not checking.
 
-## Installation
+## Tests
 
-Download from http://example.com/FIXME.
+### Unit tests
 
-## Usage
+    time docker-compose -f docker-compose-unit-tests.yml run -w /usr/src/app test lein test :unit
 
-FIXME: explanation
+## Demo
 
-    $ java -jar event-data-wikipedia-agent-0.1.0-standalone.jar [args]
+    time docker-compose -f docker-compose-unit-tests.yml run -w /usr/src/app test lein repl
 
-## Options
+## Config
 
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2016 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+ - `PERCOLATOR_URL_BASE` e.g. https://percolator.eventdata.crossref.org
+ - `JWT_TOKEN`
+ - `STATUS_SERVICE_BASE`
+ - `ARTIFACT_BASE`, e.g. https://artifact.eventdata.crossref.org
