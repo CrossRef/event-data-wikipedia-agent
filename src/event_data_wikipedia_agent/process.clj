@@ -36,8 +36,7 @@
           ; normalize format
           timestamp-str (clj-time-format/unparse date-format (clj-time-coerce/from-string (-> data :meta :dt)))]
 
-      {
-       :url new-pid
+      {:url new-pid
        :occurred-at timestamp-str
        :relation-type-id "references"
        :subj {

@@ -20,7 +20,10 @@
 (def source-id "wikipedia")
 
 (def stream-url "https://stream.wikimedia.org/v2/stream/recentchange")
-(def action-chunk-size 100)
+(def
+  action-chunk-size
+  "Number of input actions to batch into events. A value of 100 results in message size of about 150 KB"
+  100)
 
 (def action-input-buffer 1000000)
 (def action-chan (delay (chan action-input-buffer (partition-all action-chunk-size))))
@@ -73,7 +76,7 @@
 (defn run-send
   "Take chunks of Actions from the action-chan, assemble into Percolator Input Packages, put them on the input-package-channel.
    Blocks forever."
-  [artifacts input-package-channel]
+  [artifacts callback]
   ; Take chunks of inputs, a few tweets per input bundle.
   ; Gather then into a Page of actions.
   (log/info "Waiting for chunks of actions...")
@@ -86,13 +89,13 @@
                      :source-token source-token
                      :source-id source-id}]
         (status/send! "wikipedia-agent" "send" "input-package" (count actions))
-        (>!! input-package-channel payload)
+        (callback payload)
         (log/info "Sent a chunk of" (count actions) "actions"))
       (recur (<!! c)))))
 
-
 (def agent-definition
   {:agent-name "wikipedia-agent"
+   :jwt (:wikipedia-jwt env)
    :version version
    :schedule []
    :runners [{:name "ingest-stream"
