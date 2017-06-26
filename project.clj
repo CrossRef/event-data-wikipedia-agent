@@ -7,7 +7,7 @@
                  [org.clojure/tools.nrepl "0.2.12"]
                  [org.clojure/core.async "0.2.391"]
                  [org.crossref.event-data-agent-framework "0.2.0"]
-                 [event-data-common "0.1.29-SNAPSHOT"]
+                 [event-data-common "0.1.29"]
                  [robert/bruce "0.8.0"]
                  [throttler "1.0.0"]
                  [commons-codec/commons-codec "1.10"]
